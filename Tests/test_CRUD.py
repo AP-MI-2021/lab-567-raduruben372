@@ -2,6 +2,37 @@ from Domain.obiect import get_id, get_nume, get_descriere, get_locatie, get_pret
 from Logic.CRUD import add_obiect, get_by_id, delete_obiect, modify_obiect
 
 
+def test_get_by_id():
+    inventar = []
+    inventar = add_obiect("1", "Samsung S20", "Telefon", 2500, "C2", inventar)
+    inventar = add_obiect("2", "Samsung S21", "Telefon", 1500, "C3", inventar)
+    inventar = add_obiect("3", "Samsung S9", "Telefon", 500, "C4", inventar)
+
+    obiect = get_by_id("1", inventar)
+    assert get_id(obiect) == "1"
+    assert get_nume(obiect) == "Samsung S20"
+    assert get_descriere(obiect) == "Telefon"
+    assert get_pret_achizitie(obiect) == 2500
+    assert get_locatie(obiect) == "C2"
+
+    obiect = get_by_id("2", inventar)
+    assert get_id(obiect) == "2"
+    assert get_nume(obiect) == "Samsung S21"
+    assert get_descriere(obiect) == "Telefon"
+    assert get_pret_achizitie(obiect) == 1500
+    assert get_locatie(obiect) == "C3"
+
+    obiect = get_by_id("3", inventar)
+    assert get_id(obiect) == "3"
+    assert get_nume(obiect) == "Samsung S9"
+    assert get_descriere(obiect) == "Telefon"
+    assert get_pret_achizitie(obiect) == 500
+    assert get_locatie(obiect) == "C4"
+
+    assert get_by_id("4", inventar) is None
+    assert get_by_id("5", inventar) is None
+
+
 def test_add_obiect():
     inventar = []
     inventar = add_obiect("1", "Samsung S20", "Telefon", 2500, "C2", inventar)
