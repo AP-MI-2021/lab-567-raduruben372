@@ -12,6 +12,8 @@ def add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar):
     :param inventar: lista obiecte
     :return: adauga un obiect in dictionar
     '''
+    if get_by_id(id, inventar) is not None:
+        raise ValueError("Id-ul exista deja")
     obiect = creeaza_obiect(id, nume, descriere, pret_achizitie, locatie)
     return inventar + [obiect]
 
@@ -37,7 +39,8 @@ def delete_obiect(id, inventar):
     :param inventar: lista cu obiecte
     :return: o lista de obiecte fara obiectul cu id-ul dat
     '''
-
+    if get_by_id(id, inventar) is None:
+        raise ValueError('Nu exista un obiect cu id-ul dat!')
     return[obiect for obiect in inventar if get_id(obiect) != id]
 
 
