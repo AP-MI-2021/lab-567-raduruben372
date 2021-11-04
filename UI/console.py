@@ -1,6 +1,6 @@
 from Domain.obiect import to_string
 from Logic.CRUD import add_obiect, delete_obiect, modify_obiect, get_by_id
-from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare
+from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare, suma_pret_locatie
 
 
 def print_menu():
@@ -12,6 +12,7 @@ def print_menu():
 5.  Concateneaza cuvantul citit la obiectele cu pretul mai mare decat valoarea citita
 6.  Determina cel mai mare pret pentru fiecare locatie
 7.  Ordoneaza obiectele crescator dupa pretul de achizitie
+8.  Afiseaza sumele preturilor pentru fiecare locatie
 a.  Afiseaza toate obiectele
 x.  Iesire''')
 
@@ -107,6 +108,12 @@ def show_all(inventar):
          print(to_string(obiect))
 
 
+def ui_suma_pret_locatie(inventar):
+    rezultat = suma_pret_locatie(inventar)
+    for locatie in rezultat:
+        print(f"Locatia {locatie} are suma preturilor {rezultat[locatie]}")
+
+
 def run_menu(inventar):
     while True:
         print_menu()
@@ -127,7 +134,7 @@ def run_menu(inventar):
         elif optiune == "7":
             ui_ordonare(inventar)
         elif optiune == "8":
-            pass
+            ui_suma_pret_locatie(inventar)
         elif optiune == "u":
             pass
         elif optiune == 'a':

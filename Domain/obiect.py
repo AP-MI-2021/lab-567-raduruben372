@@ -8,7 +8,6 @@ def creeaza_obiect(id, nume, descriere, pret_achizitie, locatie):
     :param locatie: string
     :return: o lista ce retine un obiect
     '''
-
     return{
         'id': id,
         'nume': nume,

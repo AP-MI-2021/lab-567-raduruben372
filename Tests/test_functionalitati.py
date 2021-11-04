@@ -1,6 +1,6 @@
-from Domain.obiect import get_locatie, get_descriere
+from Domain.obiect import get_locatie, get_descriere, get_id
 from Logic.CRUD import add_obiect, get_by_id
-from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie
+from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, suma_pret_locatie, ordonare
 
 
 def test_mutare():
@@ -43,3 +43,32 @@ def test_pret_maxim_locatie():
     assert rezultat["B121"] == 1200
     assert rezultat["C121"] == 3800
     assert rezultat["D421"] == 3200
+
+
+def test_ordonare():
+    inventar = []
+    inventar = add_obiect("1", "Samsung S10", "Telefon", 1200, "B121", inventar)
+    inventar = add_obiect("2", "Samsung S20", "Telefon", 200, "B121", inventar)
+    inventar = add_obiect("3", "Samsung S21", "Tel", 3800, "C121", inventar)
+
+    rezultat = ordonare(inventar)
+
+    assert get_id(rezultat[0]) == "2"
+    assert get_id(rezultat[1]) == "1"
+    assert get_id(rezultat[2]) == "3"
+
+
+def test_suma_pret_locatie():
+    inventar =[]
+    inventar = add_obiect("1", "Samsung S10", "Telefon", 1200.0, "B121", inventar)
+    inventar = add_obiect("2", "Samsung S20", "Telefon", 200.0, "B121", inventar)
+    inventar = add_obiect("3", "Samsung S21", "Tel", 3800.0, "C121", inventar)
+    inventar = add_obiect("4", "Samsung S21", "Tel", 3200.0, "C121", inventar)
+    inventar = add_obiect("5", "Samsung S21", "Tel", 3200.0, "D421", inventar)
+
+    rezultat = suma_pret_locatie(inventar)
+
+    assert len(rezultat) == 3
+    assert rezultat["C121"] == 7000.0
+    assert rezultat["B121"] == 1400.0
+    assert rezultat["D421"] == 3200.0

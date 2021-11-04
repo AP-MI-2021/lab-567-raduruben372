@@ -75,3 +75,20 @@ def ordonare(inventar):
     :return: inventar nou ordonat
     '''
     return sorted(inventar, key=lambda obiect: float(get_pret_achizitie(obiect)))
+
+
+def suma_pret_locatie(inventar):
+    '''
+    Afiseaza sumele preturilor pentru fiecare locatie
+    :param inventar: inventar cu obiecte
+    :return: rezultat cu sume
+    '''
+    rezultat = {}
+    for obiect in inventar:
+        locatie = get_locatie(obiect)
+        pret = float(get_pret_achizitie(obiect))
+        if locatie in rezultat:
+            rezultat[locatie] += pret
+        else:
+            rezultat[locatie] = pret
+    return rezultat
