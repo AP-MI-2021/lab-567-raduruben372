@@ -66,3 +66,12 @@ def pret_maxim_locatie(inventar):
         else:
             rezultat[locatie] = pret
     return rezultat
+
+
+def ordonare(inventar):
+    '''
+    Ordoneaza obiectele crescator dupa pretul de achizitie
+    :param inventar: inventar cu obiecte
+    :return: inventar nou ordonat
+    '''
+    return sorted(inventar, key=lambda obiect: float(get_pret_achizitie(obiect)))

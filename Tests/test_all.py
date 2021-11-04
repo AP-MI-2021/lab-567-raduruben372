@@ -11,4 +11,4 @@ def run_all_test():
     test_modify_obiect()
     test_mutare()
     test_concatenare()
-    test_pret_maxim_locatie
+    test_pret_maxim_locatie()

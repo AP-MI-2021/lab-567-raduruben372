@@ -1,6 +1,6 @@
 from Domain.obiect import to_string
 from Logic.CRUD import add_obiect, delete_obiect, modify_obiect, get_by_id
-from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie
+from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare
 
 
 def print_menu():
@@ -11,6 +11,7 @@ def print_menu():
 4.  Mutarea tuturor obiectelor dintr-o locație în alta.
 5.  Concateneaza cuvantul citit la obiectele cu pretul mai mare decat valoarea citita
 6.  Determina cel mai mare pret pentru fiecare locatie
+7.  Ordoneaza obiectele crescator dupa pretul de achizitie
 a.  Afiseaza toate obiectele
 x.  Iesire''')
 
@@ -98,6 +99,9 @@ def ui_pret_maxim_locatie(inventar):
         print(f"Locatia : {locatie} are pretul maxim {rezultat[locatie]}")
 
 
+def ui_ordonare(inventar):
+    show_all(ordonare(inventar))
+
 def show_all(inventar):
     for obiect in inventar:
          print(to_string(obiect))
@@ -121,7 +125,7 @@ def run_menu(inventar):
         elif optiune == "6":
             ui_pret_maxim_locatie(inventar)
         elif optiune == "7":
-            pass
+            ui_ordonare(inventar)
         elif optiune == "8":
             pass
         elif optiune == "u":
