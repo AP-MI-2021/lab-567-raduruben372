@@ -48,3 +48,21 @@ def concatenare(cuvant, valoare, inventar):
         else:
             inventar_nou.append(obiect)
     return inventar_nou
+
+
+def pret_maxim_locatie(inventar):
+    '''
+    Determina cel mai mare pret pentru fiecare locatie
+    :param inventar: inventar cu obiecte
+    :return: rezultat cu preturi
+    '''
+    rezultat = {}
+    for obiect in inventar:
+        pret = get_pret_achizitie(obiect)
+        locatie = get_locatie(obiect)
+        if locatie in rezultat:
+            if pret > rezultat[locatie]:
+                rezultat[locatie] = pret
+        else:
+            rezultat[locatie] = pret
+    return rezultat

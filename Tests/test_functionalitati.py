@@ -1,6 +1,6 @@
 from Domain.obiect import creeaza_obiect, get_locatie, get_descriere
 from Logic.CRUD import add_obiect, get_by_id
-from Logic.functionalitati import mutare, concatenare
+from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie
 
 
 def test_mutare():
@@ -29,3 +29,17 @@ def test_concatenare():
     assert get_descriere(get_by_id("1", inventar)) == "TelefonScump"
     assert get_descriere(get_by_id("2", inventar)) == "Telefon"
     assert get_descriere(get_by_id("3", inventar)) == "TelScump"
+
+
+def test_pret_maxim_locatie():
+    inventar = []
+    inventar = add_obiect("1", "Samsung S10", "Telefon", 1200, "B121", inventar)
+    inventar = add_obiect("2", "Samsung S20", "Telefon", 200, "B121", inventar)
+    inventar = add_obiect("3", "Samsung S21", "Tel", 3800, "C121", inventar)
+    inventar = add_obiect("3", "Samsung S21", "Tel", 3200, "C121", inventar)
+    inventar = add_obiect("3", "Samsung S21", "Tel", 3200, "D421", inventar)
+
+    rezultat = pret_maxim_locatie(inventar)
+    assert rezultat["B121"] == 1200
+    assert rezultat["C121"] == 3800
+    assert rezultat["D421"] == 3200

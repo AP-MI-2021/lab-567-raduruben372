@@ -1,6 +1,6 @@
 from Tests.test_CRUD import test_get_by_id, test_add_obiect, test_delete_obiect, test_modify_obiect
 from Tests.test_domain import test_obiect
-from Tests.test_functionalitati import test_mutare, test_concatenare
+from Tests.test_functionalitati import test_mutare, test_concatenare, test_pret_maxim_locatie
 
 
 def run_all_test():
@@ -11,3 +11,4 @@ def run_all_test():
     test_modify_obiect()
     test_mutare()
     test_concatenare()
+    test_pret_maxim_locatie
