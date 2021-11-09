@@ -30,9 +30,12 @@ def ui_add_obiect(inventar, undo_operations, redo_operations):
         descriere = input("Dati descrierea: ")
         if descriere == "":
             raise ValueError('Descrierea trebuie sa fie nenula')
-        pret_achizitie = float(input('Dati pretul: '))
-        if isinstance(pret_achizitie, int) is False and isinstance(pret_achizitie,float) is False:
-            raise ValueError('Introduceti un numar!!')
+        try:
+            pret_achizitie = float(input('Dati pretul: '))
+            if isinstance(pret_achizitie, int) is False and isinstance(pret_achizitie, float) is False:
+                raise ValueError('Introduceti un numar!!')
+        except Exception:
+            raise ValueError(f"Introduceti un numar real!! Pretul nu este corect!")
         locatie = input("Dati locatia: ")
         if len(locatie) != 4:
             raise ValueError('Locatia trebuie sa aiba 4 caractere!')
@@ -193,5 +196,3 @@ def run_menu(inventar):
             break
         else:
             print('Optiune gresita! Reincercati: ')
-
-
