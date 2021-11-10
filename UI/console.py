@@ -1,4 +1,4 @@
-from Domain.obiect import to_string, get_nume, get_pret_achizitie, get_descriere, get_locatie
+from Domain.obiect import to_string
 from Logic.CRUD import add_obiect, delete_obiect, modify_obiect, get_by_id
 from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare, suma_pret_locatie, undo, redo
 

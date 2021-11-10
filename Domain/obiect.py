@@ -56,7 +56,7 @@ def get_pret_achizitie(obiect):
     '''
     Getter pentru pre_achizitie
     :param obiect: dictionar de tipul obiect
-    :return: preul de achizitie a obiectului
+    :return: pretul de achizitie a obiectului
     '''
     return obiect["pret_achizitie"]
 

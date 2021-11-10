@@ -1,5 +1,5 @@
-from Domain.obiect import get_locatie, get_descriere, get_id, to_string
-from Logic.CRUD import add_obiect, get_by_id, delete_obiect
+from Domain.obiect import get_locatie, get_descriere, get_id
+from Logic.CRUD import add_obiect, get_by_id
 from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, suma_pret_locatie, ordonare
 
 
