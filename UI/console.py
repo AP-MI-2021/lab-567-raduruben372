@@ -1,6 +1,6 @@
 from Domain.obiect import to_string, get_nume, get_pret_achizitie, get_descriere, get_locatie
 from Logic.CRUD import add_obiect, delete_obiect, modify_obiect, get_by_id
-from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare, suma_pret_locatie
+from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, ordonare, suma_pret_locatie, undo, redo
 
 
 def print_menu():
@@ -39,13 +39,8 @@ def ui_add_obiect(inventar, undo_operations, redo_operations):
         locatie = input("Dati locatia: ")
         if len(locatie) != 4:
             raise ValueError('Locatia trebuie sa aiba 4 caractere!')
-        rezultat = add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar)
-        undo_operations.append([
-            lambda: delete_obiect(id, rezultat),
-            lambda: add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar)
-        ])
-        redo_operations.clear()
-        return  rezultat
+        rezultat = add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar, undo_operations, redo_operations)
+        return rezultat
     except ValueError as ve:
         print('Eroare: ', ve)
         return inventar
@@ -54,20 +49,8 @@ def ui_add_obiect(inventar, undo_operations, redo_operations):
 def ui_delete_obiect(inventar, undo_operations, redo_operations):
     try:
          id = input("Dati id-ul obiectului de sters: ")
-         rezultat = delete_obiect(id, inventar)
-         obiect_sters = get_by_id(id, inventar)
-         undo_operations.append([
-             lambda : add_obiect(
-                 id,
-                 get_nume(obiect_sters),
-                 get_descriere(obiect_sters),
-                 get_pret_achizitie(obiect_sters),
-                 get_locatie(obiect_sters),
-                 rezultat
-             ),
-             lambda: delete_obiect(id, inventar)
-         ])
-         redo_operations.clear()
+         rezultat = delete_obiect(id, inventar, undo_operations, redo_operations)
+         #obiect_sters = get_by_id(id, inventar)
          return rezultat
     except ValueError as ve:
         print('Eroare: ', ve)
@@ -89,20 +72,8 @@ def ui_modify_obiect(inventar, undo_operations, redo_operations):
          locatie = input('Dati noua locatie :')
          if len(locatie) != 4:
              raise ValueError('Locatia trebuie sa aiba 4 caractere')
-         rezultat =  modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar)
-         obiect_vechi = get_by_id(id, inventar)
-         undo_operations.append([
-             lambda: modify_obiect(
-                 id,
-                 get_nume(obiect_vechi),
-                 get_descriere(obiect_vechi),
-                 get_pret_achizitie(obiect_vechi),
-                 get_locatie(obiect_vechi),
-                 rezultat
-             ),
-             lambda: modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar)
-         ])
-         redo_operations.clear()
+         rezultat =  modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar, undo_operations, redo_operations)
+         #obiect_vechi = get_by_id(id, inventar)
          return rezultat
     except ValueError as ve:
         print('Eroare: ', ve)
@@ -142,6 +113,7 @@ def ui_pret_maxim_locatie(inventar):
 def ui_ordonare(inventar):
     show_all(ordonare(inventar))
 
+
 def show_all(inventar):
     for obiect in inventar:
          print(to_string(obiect))
@@ -176,20 +148,14 @@ def run_menu(inventar):
             ui_ordonare(inventar)
         elif optiune == "8":
             ui_suma_pret_locatie(inventar)
-        elif optiune == "u":
-            if len(undo_operations) > 0:
-                operations = undo_operations.pop()
-                redo_operations.append(operations)
-                inventar = operations[0]()
-            else:
-                print("Nu se poate face undo!")
-        elif optiune == "r":
-            if len(redo_operations) > 0:
-                operations = redo_operations.pop()
-                undo_operations.append(operations)
-                inventar = operations[1]()
-            else:
+        elif optiune.lower() == "u":
+            if len(undo_operations) == 0:
+                print('Nu se poate face undo!')
+            inventar = undo(inventar, undo_operations, redo_operations)
+        elif optiune.lower() == "r":
+            if len(redo_operations) == 0:
                 print('Nu se poate face redo!')
+            inventar = redo(inventar, undo_operations, redo_operations)
         elif optiune == 'a':
             show_all(inventar)
         elif optiune == "x":

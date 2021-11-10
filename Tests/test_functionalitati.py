@@ -1,5 +1,5 @@
-from Domain.obiect import get_locatie, get_descriere, get_id
-from Logic.CRUD import add_obiect, get_by_id
+from Domain.obiect import get_locatie, get_descriere, get_id, to_string
+from Logic.CRUD import add_obiect, get_by_id, delete_obiect
 from Logic.functionalitati import mutare, concatenare, pret_maxim_locatie, suma_pret_locatie, ordonare
 
 
@@ -72,3 +72,4 @@ def test_suma_pret_locatie():
     assert rezultat["C121"] == 7000.0
     assert rezultat["B121"] == 1400.0
     assert rezultat["D421"] == 3200.0
+

@@ -1,7 +1,7 @@
 from Domain.obiect import creeaza_obiect, get_id
 
 
-def add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar):
+def add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar, undo_operations = None, redo_operations = None):
     '''
     adauga un obiect in inventar
     :param id: string
@@ -14,6 +14,9 @@ def add_obiect(id, nume, descriere, pret_achizitie, locatie, inventar):
     '''
     if get_by_id(id, inventar) is not None:
         raise ValueError("Id-ul exista deja")
+    if undo_operations is not None and redo_operations is not None:
+        undo_operations.append(inventar)
+        redo_operations.clear()
     obiect = creeaza_obiect(id, nume, descriere, pret_achizitie, locatie)
     return inventar + [obiect]
 
@@ -32,7 +35,7 @@ def get_by_id(id, inventar):
     return None
 
 
-def delete_obiect(id, inventar):
+def delete_obiect(id, inventar, undo_operations = None, redo_operations = None):
     '''
     sterge un obiect cu id-ul dat din inventar
     :param id: id obiect
@@ -41,10 +44,13 @@ def delete_obiect(id, inventar):
     '''
     if get_by_id(id, inventar) is None:
         raise ValueError('Nu exista un obiect cu id-ul dat!')
+    if undo_operations is not None and redo_operations is not None:
+        undo_operations.append(inventar)
+        redo_operations.clear()
     return[obiect for obiect in inventar if get_id(obiect) != id]
 
 
-def modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar):
+def modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar, undo_operations = None, redo_operations = None):
     '''
     modifica obiectul cu id-ul dat
     :param id: id obiect
@@ -55,6 +61,9 @@ def modify_obiect(id, nume, descriere, pret_achizitie, locatie, inventar):
     :param inventar: inventar de obiecte
     :return:
     '''
+    if undo_operations is not None and redo_operations is not None:
+        undo_operations.append(inventar)
+        redo_operations.clear()
     inventar_nou = []
     for obiect in inventar:
         if get_id(obiect) == id:

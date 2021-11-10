@@ -92,3 +92,17 @@ def suma_pret_locatie(inventar):
         else:
             rezultat[locatie] = pret
     return rezultat
+
+
+def undo(inventar, undo_operations, redo_operations):
+    if len(undo_operations) > 0:
+        redo_operations.append(inventar)
+        return undo_operations.pop()
+    return inventar
+
+
+def redo(inventar, undo_operations, redo_operations):
+    if len(redo_operations) > 0:
+        undo_operations.append(inventar)
+        return redo_operations.pop()
+    return inventar
